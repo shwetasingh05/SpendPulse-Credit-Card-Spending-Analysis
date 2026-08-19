@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SpendPulse — Customer Intelligence and Decision Support Engine built on 8,950 credit card customer records using K-Means clustering.">
+  <title>SpendPulse — Customer Intelligence & Decision Support</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Single Subtle Cyan Ambient Background -->
+  <div class="ambient-glow"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" id="brandLogo">
+        <img src="logo.jpg" alt="SpendPulse Customer Intelligence" class="brand-logo-img">
+      </a>
+
+      <nav class="nav-links">
+        <a href="#why-it-matters">Why it matters</a>
+        <a href="#segments">Segments</a>
+        <a href="#insights">Insights</a>
+        <a href="#calculator">ROI Simulator</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle Light/Dark Theme" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <a href="https://spending-cluster.streamlit.app/" target="_blank" rel="noopener" class="btn btn-secondary nav-btn">
+          <span>Open Dashboard ↗</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Human Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-layout">
+        <div class="hero-text-content">
+          <div class="hero-meta-tag">
+            <span class="meta-dot"></span>
+            <span>Built from 8,000+ customer records</span>
+          </div>
+
+          <h1 class="hero-headline">
+            8,000+ <span class="hover-fact-target" id="cardholderFactTrigger">cardholders<span class="hover-pulse-dot"></span>
+              <span class="fact-popover" id="factPopover" role="tooltip">
+                <span class="fact-popover-header">
+                  <span class="fact-badge">💡 Cardholder Intelligence</span>
+                </span>
+                <span class="fact-popover-body" id="factPopoverContent">
+                  "Over 60% of credit card accounts worldwide carry a balance or remain inactive for extended periods."
+                </span>
+              </span>
+            </span>.<br>
+            <span class="hero-subline">3 behaviors.<br>One growth problem.</span>
+          </h1>
+
+          <p class="hero-lead">
+            SpendPulse looks at how customers actually use their credit cards, groups similar behaviors together, and turns those patterns into actions a business can test.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#segments" class="btn btn-primary btn-lg">
+              <span>Explore the Segments →</span>
+            </a>
+            <a href="https://spending-cluster.streamlit.app/" target="_blank" rel="noopener" class="btn btn-outline btn-lg">
+              <span>Open Dashboard ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Product Preview -->
+        <div class="hero-product-preview">
+          <div class="preview-header">
+            <div class="preview-title">
+              <span class="status-dot"></span>
+              <span>The model found 3 distinct customer behaviors.</span>
+            </div>
+            <div class="preview-tag">K-Means K=3</div>
+          </div>
+
+          <div class="preview-body">
+            <div class="mini-cluster-chart">
+              <div class="mini-cluster-bar bar-active" style="height: 30%;" title="Active Transactors (14.2%)">
+                <span class="bar-num">14.2%</span>
+              </div>
+              <div class="mini-cluster-bar bar-revolver" style="height: 38%;" title="Cash Advance Revolvers (17.4%)">
+                <span class="bar-num">17.4%</span>
+              </div>
+              <div class="mini-cluster-bar bar-inactive" style="height: 100%;" title="Inactive Users (68.3%)">
+                <span class="bar-num">68.3%</span>
+              </div>
+            </div>
+
+            <div class="mini-cluster-legend">
+              <span>Active (1,275)</span>
+              <span>Revolvers (1,561)</span>
+              <span class="highlight-inactive">Inactive (6,114)</span>
+            </div>
+
+            <div class="preview-finding-box">
+              <span class="finding-icon">💡</span>
+              <p><strong>Primary Discovery:</strong> 6,114 out of 8,950 customers are low-activity. The biggest growth bottleneck is customer activation, not acquisition.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Important Discovery Section -->
+    <section class="section discovery-section" id="insights">
+      <div class="container">
+        <div class="discovery-card">
+          <div class="section-tag">Important Discovery</div>
+          <h2>The biggest opportunity may already be in the database.</h2>
+          <p class="discovery-sub">Here's the surprising part.</p>
+
+          <div class="discovery-stat-box">
+            <div class="stat-mega">68.3%</div>
+            <div class="stat-mega-label">of the customers in the analyzed dataset are inactive or low-activity.</div>
+          </div>
+
+          <p class="discovery-explain">That's a different problem from customer acquisition.</p>
+
+          <div class="discovery-highlight-quote">
+            <h3>"Can we wake up the customers we already have?"</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Three Customer Personas Section -->
+    <section class="section segments-section" id="segments">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Customer Segments</span>
+          <h2>So who are these customers?</h2>
+          <p>The model grouped 8,950 credit card customers into three distinct behavioral personas.</p>
+        </div>
+
+        <div class="personas-grid-three">
+          <!-- Persona 1 -->
+          <div class="human-persona-card card-active-accent">
+            <div class="card-persona-header">
+              <h3>Active Transactors</h3>
+              <span class="cluster-sub-label">Cluster 0 · 1,275 customers (14.2%)</span>
+            </div>
+
+            <p class="persona-desc">
+              These customers spend regularly, use their credit limits, and tend to pay consistently.
+            </p>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHO THEY ARE</span>
+              <p>High purchase frequency, low cash advance reliance, steady balance payoff.</p>
+            </div>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHY WE CARE</span>
+              <p>Retention and loyalty.</p>
+            </div>
+
+            <div class="persona-field action-field">
+              <span class="field-lbl">WHAT WE COULD DO</span>
+              <p>Premium rewards and personalized offers.</p>
+            </div>
+          </div>
+
+          <!-- Persona 2 -->
+          <div class="human-persona-card card-revolver-accent">
+            <div class="card-persona-header">
+              <h3>Cash Advance Revolvers</h3>
+              <span class="cluster-sub-label">Cluster 1 · 1,561 customers (17.4%)</span>
+            </div>
+
+            <p class="persona-desc">
+              These customers rely heavily on cash advances and tend to carry larger balances.
+            </p>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHO THEY ARE</span>
+              <p>Frequent cash withdrawals, elevated balance ratios, higher repayment risk.</p>
+            </div>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHY WE CARE</span>
+              <p>Revenue vs. risk balance.</p>
+            </div>
+
+            <div class="persona-field action-field">
+              <span class="field-lbl">WHAT WE COULD DO</span>
+              <p>Risk-aware offers and balance-management strategies.</p>
+            </div>
+          </div>
+
+          <!-- Persona 3 -->
+          <div class="human-persona-card card-inactive-accent">
+            <div class="card-persona-header">
+              <h3>Inactive / Low-Activity Users</h3>
+              <span class="cluster-sub-label">Cluster 2 · 6,114 customers (68.3%)</span>
+            </div>
+
+            <p class="persona-desc">
+              These customers have credit available but barely use it.
+            </p>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHO THEY ARE</span>
+              <p>Low transaction volume, minimal balance, substantial dormant credit lines.</p>
+            </div>
+
+            <div class="persona-field">
+              <span class="field-lbl">WHY WE CARE</span>
+              <p>Reactivation potential.</p>
+            </div>
+
+            <div class="persona-field action-field">
+              <span class="field-lbl">WHAT WE COULD DO</span>
+              <p>Targeted re-engagement campaigns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The "Why It Matters" Section -->
+    <section class="section why-matters-section" id="why-it-matters">
+      <div class="container">
+        <div class="why-matters-box">
+          <span class="section-tag">Decision Framework</span>
+          <h2>Okay, so what?</h2>
+          <p class="why-sub">The model is useful only if it changes what we do next.</p>
+
+          <div class="framework-horizontal-grid">
+            <div class="framework-step">
+              <div class="fw-num">01</div>
+              <h4>Segment</h4>
+              <p>Who behaves similarly?</p>
+            </div>
+            <div class="fw-arrow">↓</div>
+            <div class="framework-step">
+              <div class="fw-num">02</div>
+              <h4>Understand</h4>
+              <p>What makes the group different?</p>
+            </div>
+            <div class="fw-arrow">↓</div>
+            <div class="framework-step">
+              <div class="fw-num">03</div>
+              <h4>Target</h4>
+              <p>Who should receive an offer?</p>
+            </div>
+            <div class="fw-arrow">↓</div>
+            <div class="framework-step">
+              <div class="fw-num">04</div>
+              <h4>Simulate</h4>
+              <p>Would the campaign actually pay off?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Show The Actual Product Section -->
+    <section class="section product-showcase-section" id="workspace">
+      <div class="container">
+        <div class="section-header center">
+          <span class="section-tag">Interactive Product Showcase</span>
+          <h2>This isn't just a model sitting in a notebook.</h2>
+          <p>SpendPulse turns the analysis into an interactive workspace where you can inspect segments, explore the data, and test campaign assumptions.</p>
+        </div>
+
+        <div class="product-workspace-card">
+          <div class="workspace-header">
+            <h3>Customer Segment Predictor Workspace</h3>
+            <span class="status-indicator"><span class="status-dot"></span> Interactive Model</span>
+          </div>
+
+          <div class="workspace-grid">
+            <div class="workspace-controls">
+              <!-- Slider 1 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="sliderBalance">Credit Balance</label>
+                  <span class="control-value" id="valBalance">$1,500</span>
+                </div>
+                <input type="range" id="sliderBalance" min="0" max="15000" step="100" value="1500" class="range-slider">
+              </div>
+
+              <!-- Slider 2 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="sliderCashAdvance">Cash Advance Amount</label>
+                  <span class="control-value" id="valCashAdvance">$300</span>
+                </div>
+                <input type="range" id="sliderCashAdvance" min="0" max="10000" step="100" value="300" class="range-slider">
+              </div>
+
+              <!-- Slider 3 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="sliderPurchases">Total Purchases</label>
+                  <span class="control-value" id="valPurchases">$2,400</span>
+                </div>
+                <input type="range" id="sliderPurchases" min="0" max="15000" step="100" value="2400" class="range-slider">
+              </div>
+
+              <!-- Slider 4 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="sliderCreditLimit">Credit Limit</label>
+                  <span class="control-value" id="valCreditLimit">$6,000</span>
+                </div>
+                <input type="range" id="sliderCreditLimit" min="1000" max="25000" step="500" value="6000" class="range-slider">
+              </div>
+            </div>
+
+            <div class="workspace-output" id="personaOutputBox">
+              <div class="output-header">
+                <span class="output-tag">Classified Segment</span>
+                <span class="confidence-badge">K-Means Cluster Output</span>
+              </div>
+
+              <div class="persona-card-display">
+                <div class="persona-icon-wrapper" id="personaIcon">💳</div>
+                <h3 class="persona-name" id="personaTitle">Active Transactor</h3>
+                <p class="persona-subtitle" id="personaSubtitle">High spending, consistent payments, low cash advance dependence.</p>
+
+                <div class="persona-stats">
+                  <div class="p-stat">
+                    <span class="p-stat-label">Risk Profile</span>
+                    <span class="p-stat-val val-green" id="personaRisk">Low Risk</span>
+                  </div>
+                  <div class="p-stat">
+                    <span class="p-stat-label">Action Focus</span>
+                    <span class="p-stat-val" id="personaProfit">Retention & Perks</span>
+                  </div>
+                </div>
+
+                <div class="strategy-box">
+                  <h4>Recommended Strategy</h4>
+                  <p id="personaStrategy">Target with premium rewards, travel perks, and automated limit increases.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="workspace-cta-bar">
+            <a href="https://spending-cluster.streamlit.app/" target="_blank" rel="noopener" class="btn btn-primary">
+              <span>Explore the full analysis →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Honest ROI Simulator Section -->
+    <section class="section roi-section" id="calculator">
+      <div class="container">
+        <div class="section-header center">
+          <span class="section-tag">Campaign Decision Tool</span>
+          <h2>Now let's see if the idea survives the math.</h2>
+          <p>Finding a target segment is one thing. Spending money on it is another.</p>
+        </div>
+
+        <div class="roi-simulator-card">
+          <div class="roi-grid">
+            <div class="roi-controls">
+              <!-- Slider 1 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="roiTargetPct">Target Audience (% of 6,114 Inactive)</label>
+                  <span class="control-value" id="valRoiTargetPct">25% (1,528 users)</span>
+                </div>
+                <input type="range" id="roiTargetPct" min="5" max="100" step="5" value="25" class="range-slider">
+              </div>
+
+              <!-- Slider 2 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="roiConvRate">Estimated Conversion Rate</label>
+                  <span class="control-value" id="valRoiConvRate">5%</span>
+                </div>
+                <input type="range" id="roiConvRate" min="1" max="25" step="1" value="5" class="range-slider">
+              </div>
+
+              <!-- Slider 3 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="roiIncentive">Incentive Cost per User</label>
+                  <span class="control-value" id="valRoiIncentive">$35</span>
+                </div>
+                <input type="range" id="roiIncentive" min="10" max="150" step="5" value="35" class="range-slider">
+              </div>
+
+              <!-- Slider 4 -->
+              <div class="control-group">
+                <div class="control-label">
+                  <label for="roiRevPerUser">Revenue per Converted User</label>
+                  <span class="control-value" id="valRoiRevPerUser">$250</span>
+                </div>
+                <input type="range" id="roiRevPerUser" min="100" max="1200" step="25" value="250" class="range-slider">
+              </div>
+            </div>
+
+            <div class="roi-results-display">
+              <div class="roi-impact-box result-negative" id="roiResultCard">
+                <span class="res-title">Net Impact</span>
+                <div class="res-big-value val-red" id="resNetProfit">-$3,920</div>
+                <div class="roi-explain-tag" id="roiStatusBadge">The default scenario doesn't break even.</div>
+              </div>
+
+              <div class="roi-metrics-grid">
+                <div class="roi-mini-metric">
+                  <span class="lbl">Targeted / Converted</span>
+                  <span class="val" id="resActivated">1,528 / 76 users</span>
+                </div>
+                <div class="roi-mini-metric">
+                  <span class="lbl">Campaign Cost</span>
+                  <span class="val" id="resCost">$22,920</span>
+                </div>
+                <div class="roi-mini-metric">
+                  <span class="lbl">Gross Revenue Increase</span>
+                  <span class="val" id="resGross">$19,000</span>
+                </div>
+                <div class="roi-mini-metric">
+                  <span class="lbl">Estimated ROI</span>
+                  <span class="val" id="resROI">-17.1%</span>
+                </div>
+              </div>
+
+              <div class="be-indicator-box">
+                <div class="be-row">
+                  <span>Break-even conversion rate:</span>
+                  <strong id="beConvRate">6.1%</strong>
+                </div>
+                <div class="be-row">
+                  <span>Required revenue per user:</span>
+                  <strong id="beRevPerUser">$302</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="roi-honest-note">
+            <span class="note-icon">💬</span>
+            <p><strong>That's exactly why the simulator exists.</strong> A campaign shouldn't be called successful because the dashboard looks good. The economics have to work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Section -->
+    <section class="section specs-section" id="how-it-works">
+      <div class="container">
+        <div class="specs-grid">
+          <div class="specs-content">
+            <span class="section-tag">Technical Methodology</span>
+            <h2>What's happening under the hood?</h2>
+            <p>The model groups customers with similar behavioral patterns without requiring predefined customer labels.</p>
+
+            <div class="tech-pipeline-flow">
+              <span class="flow-item">Raw customer data</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">Cleaning</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">Feature scaling</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">K-Means</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">PCA</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">Customer segments</span>
+              <span class="flow-arrow">→</span>
+              <span class="flow-item">Business insights</span>
+            </div>
+
+            <div class="tech-stack-pills">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Pandas</span>
+              <span class="tech-pill">NumPy</span>
+              <span class="tech-pill">Scikit-learn</span>
+              <span class="tech-pill">K-Means</span>
+              <span class="tech-pill">PCA</span>
+              <span class="tech-pill">Streamlit</span>
+            </div>
+          </div>
+
+          <div class="specs-summary-card">
+            <h3>Analytical Principles</h3>
+            <ul class="principles-list">
+              <li><strong>Unsupervised Discovery:</strong> K-Means identifies behavioral clusters without human bias.</li>
+              <li><strong>Feature Transformation:</strong> Log scaling & MinMax normalization handle skewed credit/purchase distributions.</li>
+              <li><strong>Dimensional Validation:</strong> PCA maps 17 attributes to 2D component scatter plots.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Section -->
+    <section class="section final-cta-section">
+      <div class="container">
+        <div class="final-cta-card">
+          <h2>The model found the segments.<br>Now decide what to do with them.</h2>
+          <p>Explore the customer personas, understand the behaviors behind them, and test whether your next campaign makes financial sense.</p>
+          
+          <div class="final-actions">
+            <a href="https://spending-cluster.streamlit.app/" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+              <span>Explore the Live Dashboard →</span>
+            </a>
+            <a href="#how-it-works" class="btn btn-outline btn-lg">
+              <span>See How It Works</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Product Footer -->
+  <footer class="footer">
+    <div class="container footer-layout">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="SpendPulse Customer Intelligence" class="footer-logo-img">
+        <p class="footer-tagline">Customer Intelligence & Decision Support Platform.</p>
+
+        <div class="footer-socials">
+          <a href="mailto:shwetasingh05@gmail.com" class="social-icon-btn" title="Contact Email" aria-label="Contact Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+          <a href="https://github.com/shwetasingh05/spending-cluster" target="_blank" rel="noopener" class="social-icon-btn" title="GitHub Repository" aria-label="GitHub Repository">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <a href="#why-it-matters" class="footer-link">Why it matters</a>
+        <a href="#segments" class="footer-link">Segments</a>
+        <a href="#insights" class="footer-link">Insights</a>
+        <a href="#calculator" class="footer-link">ROI Simulator</a>
+        <a href="#how-it-works" class="footer-link">How it works</a>
+        <a href="mailto:shwetasingh05@gmail.com" class="footer-link footer-contact-link">Contact us</a>
+        <a href="https://spending-cluster.streamlit.app/" target="_blank" rel="noopener" class="btn btn-secondary footer-cta-btn">Open Dashboard ↗</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom container">
+      <p>© 2026 SpendPulse. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
