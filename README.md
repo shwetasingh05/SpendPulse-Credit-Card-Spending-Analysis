@@ -12,8 +12,8 @@ The project uses **unsupervised machine learning with K-Means clustering**, supp
 
 ## 🚀 Live Project
 
-🌐 **Live Dashboard:**
-https://spending-cluster.streamlit.app/
+🌐 **Live:**
+https://spendpulse-creditspending.netlify.app/
 
 💻 **GitHub Repository:**
 https://github.com/shwetasingh05/SpendPulse-Credit-Card-Spending-Analysis
